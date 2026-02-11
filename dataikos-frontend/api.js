@@ -1,5 +1,5 @@
 // api.js - Client API autonome pour le frontend
-const API_BASE_URL = 'https://votre-api.onrender.com';
+const API_BASE_URL = 'https://website-pxkd.onrender.com';
 
 class DataikosAPI {
     constructor() {
