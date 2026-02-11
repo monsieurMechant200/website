@@ -15,9 +15,9 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
     
     # Supabase
-    SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
-    SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
-    SUPABASE_SERVICE_ROLE_KEY: str = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
+    SUPABASE_URL: str = os.getenv("SUPABASE_URL")
+    SUPABASE_KEY: str = os.getenv("SUPABASE_KEY")
+    SUPABASE_SERVICE_ROLE_KEY: str = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
     
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "")
@@ -26,9 +26,9 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
     
     # Admin
-    ADMIN_USERNAME: str = os.getenv("ADMIN_USERNAME", "")
-    ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "")
-    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "")
+    ADMIN_USERNAME: str = os.getenv("ADMIN_USERNAME")
+    ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD")
+    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL")
     
     # File Upload
     MAX_FILE_SIZE_MB: int = int(os.getenv("MAX_FILE_SIZE_MB", "5"))
@@ -38,14 +38,14 @@ class Settings(BaseSettings):
     # Email Configuration
     EMAIL_ENABLED: bool = os.getenv("EMAIL_ENABLED", "false").lower() == "true"
     EMAIL_PROVIDER: str = os.getenv("EMAIL_PROVIDER", "smtp")
-    EMAIL_FROM: str = os.getenv("EMAIL_FROM", "noreply@dataikos.com")
+    EMAIL_FROM: str = os.getenv("EMAIL_FROM", "meilleurd2001@gmail.com")
     EMAIL_FROM_NAME: str = os.getenv("EMAIL_FROM_NAME", "DATAIKOŠ")
     
     # SMTP Configuration
     SMTP_HOST: str = os.getenv("SMTP_HOST", "smtp.gmail.com")
     SMTP_PORT: int = int(os.getenv("SMTP_PORT", "587"))
-    SMTP_USERNAME: str = os.getenv("SMTP_USERNAME", "")
-    SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD", "")
+    SMTP_USERNAME: str = os.getenv("SMTP_USERNAME")
+    SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD")
     SMTP_USE_TLS: bool = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
     
     # SendGrid Configuration
