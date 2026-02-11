@@ -17,7 +17,7 @@ pydantic-settings==2.1.0
 email-validator==2.2.0    # ← mis à jour
 
 # HTTP & File Handling
-httpx==0.24.1             # OK, compatible avec supabase 2.13
+httpx==0.28.1             # OK, compatible avec supabase 2.13
 python-multipart==0.0.6
 aiofiles==23.2.1
 Pillow==11.1.0
