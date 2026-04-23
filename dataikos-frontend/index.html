@@ -222,10 +222,10 @@
     text-decoration: none;
   }
 
-  .logo-svg {
-    width: 40px;
+  .logo-wrap img {
     height: 40px;
-    flex-shrink: 0;
+    width: auto;
+    display: block;
   }
 
   .logo-text {
@@ -578,13 +578,6 @@
     max-width: 520px;
     margin: 0 auto;
     line-height: 1.6;
-  }
-
-  .section-divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--amber), transparent);
-    margin: 20px auto 0;
   }
 
   /* ═══════════════════════════════════════
@@ -1189,6 +1182,11 @@
     gap: 8px;
   }
 
+  .footer-brand .logo-wrap img {
+    height: 28px;
+    width: auto;
+  }
+
   .footer-tagline {
     font-size: 12px;
     color: rgba(255,255,255,0.35);
@@ -1315,20 +1313,8 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#hero" class="logo-wrap">
-      <svg class="logo-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Hexagonal structure -->
-        <path d="M40 4 L72 22 L72 58 L40 76 L8 58 L8 22 Z" fill="none" stroke="rgba(23,162,122,0.4)" stroke-width="1"/>
-        <!-- Triskele arm 1 -->
-        <path d="M40 40 L62 20 L68 28 L48 44 Z" fill="#17A27A" opacity="0.9"/>
-        <!-- Triskele arm 2 -->
-        <path d="M40 40 L18 24 L14 34 L34 46 Z" fill="#0A5C4A" opacity="0.9"/>
-        <!-- Triskele arm 3 -->
-        <path d="M40 40 L40 68 L52 64 L44 44 Z" fill="#17A27A" opacity="0.7"/>
-        <!-- Center amber node -->
-        <rect x="33" y="33" width="14" height="14" rx="2" fill="#F5A623"/>
-        <!-- Outer ring -->
-        <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(23,162,122,0.15)" stroke-width="0.5"/>
-      </svg>
+      <!-- Logo sur fond blanc (dataikos logo 2.png) pour la navbar sombre -->
+      <img src="dataikos logo 2.png" alt="DATAIKOS" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%2317A27A%22/%3E%3Ctext x=%2240%22 y=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22%3ELOGO%3C/text%3E%3C/svg%3E';">
       <span class="logo-text">DATA<span>I</span>KOS</span>
     </a>
 
@@ -1462,7 +1448,6 @@
     <div class="section-header fade-up">
       <span class="section-label">Qui sommes-nous</span>
       <h2 class="section-title">At home in <span class="teal">Silicon Valley</span> and Douala.</h2>
-      <div class="section-divider"></div>
     </div>
 
     <div class="about-grid">
@@ -1516,7 +1501,6 @@
       <span class="section-label">Nos Expertises</span>
       <h2 class="section-title">Edge AI · IoT · <span class="teal">Infrastructure</span></h2>
       <p class="section-sub">De l'intelligence embarquée aux solutions cloud, nous couvrons l'intégralité du stack technologique.</p>
-      <div class="section-divider"></div>
     </div>
 
     <div class="expertise-grid">
@@ -1618,7 +1602,6 @@
     <div class="section-header fade-up">
       <span class="section-label">Produit Signature</span>
       <h2 class="section-title">VIBE SHIELD <span class="teal">by DATAIKOS</span></h2>
-      <div class="section-divider"></div>
     </div>
 
     <div class="glass-dark product-hero fade-up">
@@ -1717,7 +1700,7 @@
         the future.<br>
         <span class="teal">We build it."</span>
       </p>
-      <p style="color:rgba(255,255,255,0.45); font-size:14px; letter-spacing:1px;">— DATAIKOS · Douala · Cameroun · World</p>
+      <p style="color:rgba(255,255,255,0.45); font-size:14px; letter-spacing:1px;">DATAIKOS · Douala · Cameroun · World</p>
 
       <div class="vision-grid">
         <div class="glass vision-card fade-up">
@@ -1748,7 +1731,6 @@
     <div class="section-header fade-up">
       <span class="section-label">Le Collectif</span>
       <h2 class="section-title">Ingénieurs. <span class="teal">Chercheurs.</span> Builders.</h2>
-      <div class="section-divider"></div>
     </div>
 
     <div class="glass-dark team-statement fade-up">
@@ -1795,7 +1777,6 @@
       <span class="section-label">Contact</span>
       <h2 class="section-title">Construisons <span class="teal">ensemble.</span></h2>
       <p class="section-sub">Un projet, une collaboration, une idée à développer ? Nous sommes prêts.</p>
-      <div class="section-divider"></div>
     </div>
 
     <div class="contact-grid">
@@ -1834,10 +1815,10 @@
           </div>
         </div>
 
-        <div style="margin-top:40px; padding-top:32px; border-top: 0.5px solid rgba(23,162,122,0.15);">
+        <div style="margin-top:40px; padding-top:32px;">
           <p style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:16px; font-weight:700;">Suivez-nous</p>
           <div style="display:flex; gap:12px;">
-            <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">in</a>
+            <a href="https://www.linkedin.com/in/david-meilleur-aat-ndongo-bb43b0314" target="_blank" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">in</a>
             <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">𝕏</a>
             <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">▶</a>
           </div>
@@ -1889,16 +1870,11 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="#hero" class="logo-wrap" style="text-decoration:none">
-          <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
-            <path d="M40 4 L72 22 L72 58 L40 76 L8 58 L8 22 Z" fill="none" stroke="rgba(23,162,122,0.3)" stroke-width="1"/>
-            <path d="M40 40 L62 20 L68 28 L48 44 Z" fill="#17A27A" opacity="0.9"/>
-            <path d="M40 40 L18 24 L14 34 L34 46 Z" fill="#0A5C4A" opacity="0.9"/>
-            <path d="M40 40 L40 68 L52 64 L44 44 Z" fill="#17A27A" opacity="0.7"/>
-            <rect x="33" y="33" width="14" height="14" rx="2" fill="#F5A623"/>
-          </svg>
-          <span style="font-size:16px;font-weight:900;letter-spacing:3px;color:var(--white)">DATAIKOS</span>
+          <!-- Logo sur fond vert (dataikos logo 1.png) pour le footer -->
+          <img src="dataikos logo 1.png" alt="DATAIKOS" style="height:28px; width:auto;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%2317A27A%22/%3E%3Ctext x=%2240%22 y=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22%3ELOGO%3C/text%3E%3C/svg%3E';">
+          <span style="font-size:16px;font-weight:900;letter-spacing:3px;color:var(--white); margin-left:8px;">DATAIKOS</span>
         </a>
-        <span class="footer-tagline">"Distributed Intelligence.m, Engineered."</span>
+        <span class="footer-tagline">"Distributed Intelligence. Engineered."</span>
       </div>
 
       <div class="footer-links">
