@@ -1,2338 +1,1995 @@
 <!DOCTYPE html>
-<!-- DATAIKOS — Design system v2 | Post-AI Humanist Aesthetic -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DATAIKOS — Distributed Intelligence. Engineered.</title>
-<meta name="description" content="Collectif d'ingénieurs et chercheurs africains spécialisés en Edge AI, IoT industriel et infrastructure tech. Fondé à Douala, opérant au standard Silicon Valley.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════
-   VARIABLES & RESET
-═══════════════════════════════════════════════════ */
-:root {
-  --ink: #0D0F0A;
-  --forest: #1A4D2E;
-  --forest-mid: #2A6B42;
-  --forest-bright: #3D9B5E;
-  --amber: #C8732A;
-  --amber-light: #E8913E;
-  --cream: #F2EDE4;
-  --cream-dim: #B8B3AA;
-  --white: #FAFAF8;
-  --grain-opacity: 0.045;
-}
-
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  background: var(--ink);
-  color: var(--cream);
-  font-family: 'Space Mono', 'Courier New', monospace;
-  overflow-x: hidden;
-  cursor: none;
-}
-
-/* ── CUSTOM CURSOR ── */
-.cursor {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: var(--amber);
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
-  mix-blend-mode: difference;
-}
-
-.cursor-trail {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(200,115,42,0.4);
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease;
-}
-
-body.hovering .cursor { width: 48px; height: 48px; background: var(--forest-bright); }
-body.hovering .cursor-trail { border-color: var(--forest-bright); opacity: 0; }
-
-/* ── GRAIN OVERLAY ── */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-}
-
-/* ── TYPOGRAPHY ── */
-h1, h2, h3 {
-  font-family: 'Fraunces', Georgia, serif;
-  font-weight: 900;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-}
-
-h4, h5, h6 {
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-}
-
-.mono { font-family: 'Space Mono', monospace; }
-.serif { font-family: 'Fraunces', Georgia, serif; }
-
-/* ── CONTAINERS ── */
-.wrap {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-/* ═══════════════════════════════════════════════════
-   NAVBAR
-═══════════════════════════════════════════════════ */
-#nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 500;
-  padding: 24px 0;
-  mix-blend-mode: normal;
-  transition: padding 0.4s ease;
-}
-
-#nav.scrolled {
-  background: rgba(13,15,10,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(200,115,42,0.12);
-  padding: 16px 0;
-}
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.logo {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--cream);
-  text-decoration: none;
-  position: relative;
-}
-
-.logo em {
-  font-style: italic;
-  color: var(--amber);
-}
-
-.logo .logo-mark {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  width: 8px; height: 8px;
-  background: var(--amber);
-  border-radius: 50%;
-  animation: breathe 3s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.6); opacity: 0.5; }
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  text-decoration: none;
-  transition: color 0.2s;
-  position: relative;
-}
-
-.nav-links a:hover { color: var(--cream); }
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -3px; left: 0; right: 0;
-  height: 1px;
-  background: var(--amber);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after { transform: scaleX(1); }
-
-.nav-cta-link {
-  background: var(--amber) !important;
-  color: var(--ink) !important;
-  padding: 10px 22px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-}
-
-.nav-cta-link::after { display: none !important; }
-
-.nav-cta-link:hover {
-  background: var(--amber-light) !important;
-  color: var(--ink) !important;
-}
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  padding: 4px;
-  background: none;
-  border: none;
-}
-
-.hamburger span {
-  display: block;
-  width: 24px; height: 1px;
-  background: var(--cream);
-  transition: all 0.3s;
-}
-
-.mob-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--ink);
-  z-index: 490;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-}
-
-.mob-menu.open { display: flex; }
-
-.mob-menu a {
-  font-family: 'Fraunces', serif;
-  font-size: 48px;
-  font-weight: 900;
-  color: var(--cream);
-  text-decoration: none;
-  letter-spacing: -0.04em;
-  transition: color 0.2s;
-}
-
-.mob-menu a:hover { color: var(--amber); }
-
-.mob-close {
-  position: absolute;
-  top: 28px; right: 40px;
-  background: none;
-  border: none;
-  color: var(--cream);
-  font-size: 28px;
-  cursor: pointer;
-}
-
-/* ═══════════════════════════════════════════════════
-   HERO — Deconstruted Layout
-═══════════════════════════════════════════════════ */
-#hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-canvas-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-#heroCanvas {
-  width: 100%;
-  height: 100%;
-  opacity: 0.35;
-}
-
-/* Left column — manifesto */
-.hero-left {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  padding: 160px 60px 80px 40px;
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hero-origin {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 48px;
-}
-
-.hero-origin-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--forest-bright);
-  animation: breathe 2s ease-in-out infinite;
-}
-
-.hero-origin-text {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--forest-bright);
-}
-
-.hero-title {
-  font-size: clamp(64px, 8vw, 110px);
-  line-height: 0.92;
-  color: var(--cream);
-  position: relative;
-}
-
-.hero-title .word-distributed {
-  display: block;
-  color: var(--cream);
-}
-
-.hero-title .word-intelligence {
-  display: block;
-  color: var(--amber);
-  font-style: italic;
-}
-
-.hero-title .word-engineered {
-  display: block;
-  font-size: 0.45em;
-  font-style: normal;
-  font-weight: 300;
-  color: var(--cream-dim);
-  letter-spacing: 0.08em;
-  margin-top: 16px;
-  border-top: 1px solid rgba(242,237,228,0.15);
-  padding-top: 16px;
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(12px, 1.5vw, 22px);
-}
-
-.hero-desc {
-  max-width: 400px;
-  font-size: 13px;
-  line-height: 1.9;
-  color: var(--cream-dim);
-  margin-top: 40px;
-}
-
-.hero-ctas {
-  display: flex;
-  gap: 16px;
-  margin-top: 48px;
-  flex-wrap: wrap;
-}
-
-/* Right column — visual + stats */
-.hero-right {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: flex-end;
-  padding: 160px 40px 60px 40px;
-  position: relative;
-  z-index: 2;
-}
-
-.hero-stats-block {
-  background: rgba(26,77,46,0.12);
-  border: 1px solid rgba(61,155,94,0.2);
-  backdrop-filter: blur(12px);
-  padding: 40px 48px;
-  position: relative;
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-  width: 100%;
-  max-width: 480px;
-  margin-left: auto;
-}
-
-.hero-stats-block::before {
-  content: 'DATAIKOS.SYS';
-  position: absolute;
-  top: -10px; left: 24px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--forest-bright);
-  background: var(--ink);
-  padding: 0 8px;
-}
-
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.stat-val {
-  font-family: 'Fraunces', serif;
-  font-size: 52px;
-  font-weight: 900;
-  color: var(--amber);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.stat-label {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  margin-top: 6px;
-}
-
-/* Hero bottom strip */
-.hero-bottom {
-  grid-column: 1 / 3;
-  grid-row: 2;
-  position: relative;
-  z-index: 2;
-  border-top: 1px solid rgba(242,237,228,0.06);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  height: 52px;
-  background: rgba(13,15,10,0.5);
-  backdrop-filter: blur(8px);
-}
-
-.ticker {
-  display: flex;
-  gap: 0;
-  white-space: nowrap;
-  animation: ticker 30s linear infinite;
-}
-
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.ticker-item {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(242,237,228,0.3);
-  padding: 0 32px;
-}
-
-.ticker-item .sep {
-  margin: 0 16px;
-  color: var(--amber);
-  opacity: 0.5;
-}
-
-/* ── BUTTONS ── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 14px 28px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-.btn-amber {
-  background: var(--amber);
-  color: var(--ink);
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-}
-
-.btn-amber:hover {
-  background: var(--amber-light);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--forest);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--cream);
-  border: 1px solid rgba(242,237,228,0.25);
-}
-
-.btn-outline:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 rgba(200,115,42,0.15);
-}
-
-/* ═══════════════════════════════════════════════════
-   SECTION SHARED
-═══════════════════════════════════════════════════ */
-.section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--forest-bright);
-  margin-bottom: 24px;
-}
-
-.section-eyebrow::before {
-  content: '';
-  display: block;
-  width: 32px; height: 1px;
-  background: var(--forest-bright);
-}
-
-.section-title-large {
-  font-size: clamp(42px, 6vw, 80px);
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-  color: var(--cream);
-}
-
-.section-title-large .accent { color: var(--amber); font-style: italic; }
-.section-title-large .dim { color: var(--cream-dim); }
-
-/* ═══════════════════════════════════════════════════
-   MISSION — Asymmetric layout
-═══════════════════════════════════════════════════ */
-#mission {
-  padding: 140px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.mission-bg-stripe {
-  position: absolute;
-  top: 0; bottom: 0;
-  right: 0;
-  width: 42%;
-  background: var(--forest);
-  opacity: 0.06;
-  clip-path: polygon(60px 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.mission-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 100px;
-  align-items: start;
-}
-
-.mission-left {}
-
-.mission-quote {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(28px, 4vw, 52px);
-  font-style: italic;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--cream);
-  margin: 40px 0;
-  padding-left: 32px;
-  border-left: 3px solid var(--amber);
-  position: relative;
-}
-
-.mission-quote .author {
-  display: block;
-  font-size: 12px;
-  font-family: 'Space Mono', monospace;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: var(--cream-dim);
-  margin-top: 20px;
-}
-
-.mission-body {
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--cream-dim);
-  max-width: 540px;
-}
-
-.mission-body p + p { margin-top: 16px; }
-
-/* Pillars right */
-.pillar-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.pillar {
-  padding: 28px 0;
-  border-bottom: 1px solid rgba(242,237,228,0.06);
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.pillar:first-child { border-top: 1px solid rgba(242,237,228,0.06); }
-
-.pillar::before {
-  content: '';
-  position: absolute;
-  left: -40px; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--amber);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.3s ease;
-}
-
-.pillar:hover::before { transform: scaleY(1); }
-.pillar:hover { padding-left: 16px; }
-
-.pillar-num {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: var(--amber);
-  margin-bottom: 8px;
-  opacity: 0.7;
-}
-
-.pillar-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 8px;
-  letter-spacing: -0.01em;
-}
-
-.pillar-desc {
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--cream-dim);
-}
-
-/* ═══════════════════════════════════════════════════
-   EXPERTISE — Deconstructed grid
-═══════════════════════════════════════════════════ */
-#expertise {
-  padding: 140px 0;
-  background: rgba(26,77,46,0.04);
-  position: relative;
-}
-
-#expertise::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(61,155,94,0.3), transparent);
-}
-
-.expertise-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 80px;
-}
-
-.expertise-header-right {
-  font-size: 12px;
-  color: var(--cream-dim);
-  max-width: 280px;
-  text-align: right;
-  line-height: 1.7;
-}
-
-.exp-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto auto;
-  gap: 2px;
-}
-
-.exp-card {
-  background: rgba(242,237,228,0.02);
-  border: 1px solid rgba(242,237,228,0.06);
-  padding: 48px 36px;
-  transition: all 0.35s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.exp-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--amber);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-}
-
-.exp-card:hover { background: rgba(26,77,46,0.12); }
-.exp-card:hover::after { transform: scaleX(1); }
-
-.exp-card:nth-child(1) { grid-column: 1 / 5; }
-.exp-card:nth-child(2) { grid-column: 5 / 9; }
-.exp-card:nth-child(3) { grid-column: 9 / 13; }
-.exp-card:nth-child(4) { grid-column: 1 / 7; }
-.exp-card:nth-child(5) { grid-column: 7 / 10; }
-.exp-card:nth-child(6) { grid-column: 10 / 13; }
-
-.exp-icon {
-  width: 44px; height: 44px;
-  margin-bottom: 28px;
-}
-
-.exp-icon svg { width: 100%; height: 100%; }
-
-.exp-title {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 14px;
-  letter-spacing: -0.02em;
-}
-
-.exp-desc {
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--cream-dim);
-}
-
-.exp-tag {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--forest-bright);
-  padding: 4px 10px;
-  border: 1px solid rgba(61,155,94,0.25);
-}
-
-/* ═══════════════════════════════════════════════════
-   VIBE SHIELD — Product showcase
-═══════════════════════════════════════════════════ */
-#product {
-  padding: 160px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.product-bg {
-  position: absolute;
-  top: -100px; right: -200px;
-  width: 800px; height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(26,77,46,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.product-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.product-left {}
-
-.product-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  background: var(--amber);
-  color: var(--ink);
-  padding: 6px 14px;
-  margin-bottom: 28px;
-}
-
-.product-name {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(56px, 8vw, 96px);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--cream);
-}
-
-.product-name .sub {
-  display: block;
-  font-size: 0.3em;
-  font-style: italic;
-  color: var(--amber);
-  letter-spacing: 0.08em;
-  margin-top: 8px;
-}
-
-.product-desc {
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--cream-dim);
-  margin: 36px 0;
-  max-width: 460px;
-}
-
-/* Specs table */
-.spec-table {
-  border-top: 1px solid rgba(242,237,228,0.1);
-  margin-bottom: 40px;
-}
-
-.spec-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(242,237,228,0.06);
-}
-
-.spec-key {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-}
-
-.spec-value {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--cream);
-}
-
-/* PCB Visual */
-.product-right {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pcb-container {
-  position: relative;
-  width: 420px;
-  height: 420px;
-}
-
-.pcb-board {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.pcb-glow {
-  position: absolute;
-  inset: -40px;
-  background: radial-gradient(circle, rgba(61,155,94,0.08) 0%, transparent 70%);
-  pointer-events: none;
-  animation: pcbGlow 4s ease-in-out infinite;
-}
-
-@keyframes pcbGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Floating spec badges */
-.badge-float {
-  position: absolute;
-  background: var(--ink);
-  border: 1px solid rgba(242,237,228,0.12);
-  padding: 10px 16px;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--forest-bright);
-  animation: floatY 4s ease-in-out infinite;
-}
-
-.badge-float:nth-child(2) { animation-delay: -1.5s; top: -20px; left: -30px; }
-.badge-float:nth-child(3) { animation-delay: -3s; bottom: 40px; right: -40px; }
-.badge-float:nth-child(4) { animation-delay: -2s; top: 50%; left: -50px; }
-
-@keyframes floatY {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-/* ═══════════════════════════════════════════════════
-   VISION — Full-bleed manifesto
-═══════════════════════════════════════════════════ */
-#vision {
-  padding: 160px 0;
-  position: relative;
-  background: var(--forest);
-  overflow: hidden;
-}
-
-#vision::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  opacity: 0.04;
-  pointer-events: none;
-}
-
-.vision-inner {
-  position: relative;
-  z-index: 1;
-}
-
-.vision-statement {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(40px, 7vw, 96px);
-  line-height: 1.0;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  max-width: 900px;
-}
-
-.vision-statement .line1 { color: rgba(242,237,228,0.2); }
-.vision-statement .line2 { color: var(--cream); }
-.vision-statement .line3 { color: var(--amber); font-style: italic; }
-
-.vision-divider {
-  width: 80px;
-  height: 1px;
-  background: var(--amber);
-  margin: 64px 0;
-}
-
-.vision-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-
-.vision-card {
-  background: rgba(13,15,10,0.35);
-  border: 1px solid rgba(242,237,228,0.06);
-  padding: 48px 36px;
-  position: relative;
-  transition: background 0.3s;
-}
-
-.vision-card:hover { background: rgba(13,15,10,0.55); }
-
-.vision-card-num {
-  font-family: 'Fraunces', serif;
-  font-size: 80px;
-  font-weight: 900;
-  color: rgba(200,115,42,0.12);
-  line-height: 1;
-  position: absolute;
-  top: 20px; right: 28px;
-  letter-spacing: -0.06em;
-}
-
-.vision-card h4 {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--cream);
-  margin-bottom: 14px;
-  position: relative;
-}
-
-.vision-card p {
-  font-size: 12px;
-  line-height: 1.8;
-  color: rgba(242,237,228,0.55);
-  position: relative;
-}
-
-/* ═══════════════════════════════════════════════════
-   COLLECTIF
-═══════════════════════════════════════════════════ */
-#collectif {
-  padding: 140px 0;
-  position: relative;
-}
-
-.collectif-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-}
-
-.collectif-left {}
-
-.collectif-statement {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(18px, 2.5vw, 28px);
-  font-weight: 700;
-  line-height: 1.4;
-  color: var(--cream);
-  margin: 32px 0 48px;
-  letter-spacing: -0.02em;
-}
-
-.collectif-statement em { font-style: italic; color: var(--amber); }
-
-/* Skills bars */
-.skill-list { display: flex; flex-direction: column; gap: 24px; }
-
-.skill-item {}
-
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.skill-name-txt {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-}
-
-.skill-pct {
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--amber);
-}
-
-.skill-track {
-  height: 2px;
-  background: rgba(242,237,228,0.06);
-  position: relative;
-}
-
-.skill-fill {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  background: linear-gradient(90deg, var(--forest-bright), var(--amber));
-  width: 0;
-  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Right: rotating globe diagram */
-.collectif-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.globe-diagram {
-  position: relative;
-  width: 360px;
-  height: 360px;
-}
-
-/* ═══════════════════════════════════════════════════
-   CONTACT
-═══════════════════════════════════════════════════ */
-#contact {
-  padding: 140px 0 160px;
-  position: relative;
-}
-
-#contact::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200,115,42,0.3), transparent);
-}
-
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 80px;
-}
-
-.contact-left {}
-
-.contact-intro {
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--cream-dim);
-  margin: 28px 0 48px;
-  max-width: 380px;
-}
-
-.contact-details { display: flex; flex-direction: column; gap: 24px; }
-
-.contact-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.contact-row-icon {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(242,237,228,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 14px;
-}
-
-.contact-row-body {}
-
-.contact-row-label {
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  margin-bottom: 4px;
-}
-
-.contact-row-val {
-  font-size: 13px;
-  color: var(--cream);
-}
-
-.socials {
-  display: flex;
-  gap: 12px;
-  margin-top: 40px;
-}
-
-.social-btn {
-  width: 40px; height: 40px;
-  border: 1px solid rgba(242,237,228,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--cream-dim);
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 700;
-  transition: all 0.2s;
-}
-
-.social-btn:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: translateY(-2px);
-}
-
-/* Form */
-.contact-form { display: flex; flex-direction: column; gap: 0; }
-
-.form-row-two {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-}
-
-.field-wrap {
-  position: relative;
-  margin-bottom: 2px;
-}
-
-.field-label {
-  position: absolute;
-  top: 16px; left: 20px;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  pointer-events: none;
-  transition: all 0.2s;
-  z-index: 1;
-}
-
-.field-wrap input:focus ~ .field-label,
-.field-wrap input:not(:placeholder-shown) ~ .field-label,
-.field-wrap textarea:focus ~ .field-label,
-.field-wrap textarea:not(:placeholder-shown) ~ .field-label,
-.field-wrap select:focus ~ .field-label {
-  top: 6px;
-  font-size: 8px;
-  color: var(--forest-bright);
-}
-
-.field-wrap input,
-.field-wrap textarea,
-.field-wrap select {
-  width: 100%;
-  padding: 24px 20px 10px;
-  background: rgba(242,237,228,0.03);
-  border: 1px solid rgba(242,237,228,0.06);
-  color: var(--cream);
-  font-family: 'Space Mono', monospace;
-  font-size: 13px;
-  outline: none;
-  transition: all 0.2s;
-  -webkit-appearance: none;
-}
-
-.field-wrap input:focus,
-.field-wrap textarea:focus,
-.field-wrap select:focus {
-  background: rgba(26,77,46,0.08);
-  border-color: rgba(61,155,94,0.4);
-}
-
-.field-wrap input::placeholder,
-.field-wrap textarea::placeholder { color: transparent; }
-
-.field-wrap textarea { min-height: 130px; resize: vertical; }
-
-.field-wrap select option { background: var(--ink); }
-
-.form-submit {
-  margin-top: 2px;
-  width: 100%;
-  padding: 20px;
-  background: var(--amber);
-  color: var(--ink);
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  transition: all 0.25s;
-}
-
-.form-submit:hover {
-  background: var(--amber-light);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--forest);
-}
-
-/* ═══════════════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════════════ */
-footer {
-  border-top: 1px solid rgba(242,237,228,0.06);
-  padding: 48px 0 36px;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-.footer-brand-name {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--cream);
-  letter-spacing: -0.03em;
-}
-
-.footer-brand-name em { color: var(--amber); font-style: italic; }
-
-.footer-tagline {
-  font-size: 11px;
-  color: var(--cream-dim);
-  opacity: 0.4;
-  margin-top: 4px;
-  letter-spacing: 0.06em;
-}
-
-.footer-links { display: flex; gap: 32px; }
-
-.footer-links a {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  text-decoration: none;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-
-.footer-links a:hover { opacity: 1; color: var(--amber); }
-
-.footer-geo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  opacity: 0.35;
-}
-
-.footer-geo-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--forest-bright);
-  animation: breathe 2s ease-in-out infinite;
-}
-
-/* ═══════════════════════════════════════════════════
-   SCROLL ANIMATIONS
-═══════════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.reveal.in { opacity: 1; transform: translateY(0); }
-
-.reveal-slow { transition-duration: 1.4s; }
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .exp-card:nth-child(1) { grid-column: 1 / 7; }
-  .exp-card:nth-child(2) { grid-column: 7 / 13; }
-  .exp-card:nth-child(3) { grid-column: 1 / 7; }
-  .exp-card:nth-child(4) { grid-column: 7 / 13; }
-  .exp-card:nth-child(5) { grid-column: 1 / 7; }
-  .exp-card:nth-child(6) { grid-column: 7 / 13; }
-}
-
-@media (max-width: 900px) {
-  .nav-links, .nav-cta-link { display: none; }
-  .hamburger { display: flex; }
-
-  body { cursor: auto; }
-  .cursor, .cursor-trail { display: none; }
-
-  #hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 120px 20px 40px; }
-  .hero-right { grid-column: 1; padding: 0 20px 20px; }
-  .hero-stats-block { margin-left: 0; }
-
-  .mission-grid { grid-template-columns: 1fr; gap: 48px; }
-  .expertise-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .expertise-header-right { text-align: left; }
-
-  .exp-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; }
-  .exp-card { grid-column: auto !important; }
-
-  .product-layout { grid-template-columns: 1fr; }
-  .product-right { display: none; }
-
-  .vision-cards { grid-template-columns: 1fr; }
-
-  .collectif-layout { grid-template-columns: 1fr; }
-  .collectif-right { display: none; }
-
-  .contact-layout { grid-template-columns: 1fr; }
-  .form-row-two { grid-template-columns: 1fr; }
-
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .footer-links { flex-wrap: wrap; gap: 16px; }
-
-  .wrap { padding: 0 20px; }
-  .nav-inner { padding: 0 20px; }
-}
-
-@media (max-width: 600px) {
-  .stats-row { grid-template-columns: 1fr 1fr; }
-  .stat-val { font-size: 36px; }
-  .hero-ctas { flex-direction: column; }
-  .btn { justify-content: center; }
-}
+  :root {
+    --teal-ink: #04342C;
+    --teal-core: #0A5C4A;
+    --teal-vivid: #17A27A;
+    --amber: #F5A623;
+    --sand: #F5F0E8;
+    --white: #FFFFFF;
+    --grey-light: #E8E8E8;
+    --black: #0D0D0D;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, sans-serif;
+    background: var(--teal-ink);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════
+     BACKGROUND ANIMATED — ambiance eau profonde
+  ═══════════════════════════════════════ */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .bg-canvas canvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bg-blobs {
+    position: absolute;
+    inset: 0;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    animation: blobFloat linear infinite;
+  }
+
+  .blob-1 {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, #17A27A, #04342C);
+    top: -15%; left: -10%;
+    animation-duration: 22s;
+    animation-delay: 0s;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #0A5C4A, #17A27A);
+    bottom: -10%; right: -5%;
+    animation-duration: 28s;
+    animation-delay: -8s;
+  }
+  .blob-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #F5A623 0%, transparent 70%);
+    top: 40%; left: 55%;
+    opacity: 0.08;
+    animation-duration: 18s;
+    animation-delay: -14s;
+  }
+  .blob-4 {
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, #17A27A, transparent);
+    top: 60%; left: 20%;
+    opacity: 0.12;
+    animation-duration: 35s;
+    animation-delay: -5s;
+  }
+
+  @keyframes blobFloat {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25%  { transform: translate(30px, -40px) scale(1.05) rotate(5deg); }
+    50%  { transform: translate(-20px, 30px) scale(0.97) rotate(-3deg); }
+    75%  { transform: translate(40px, 20px) scale(1.03) rotate(4deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Water ripple grid lines */
+  .water-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(23,162,122,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23,162,122,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridShift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes gridShift {
+    0%   { transform: perspective(800px) rotateX(0deg) translateY(0); }
+    100% { transform: perspective(800px) rotateX(2deg) translateY(-10px); }
+  }
+
+  /* ═══════════════════════════════════════
+     GLASS MIXIN — style eau
+  ═══════════════════════════════════════ */
+  .glass {
+    background: rgba(10, 92, 74, 0.12);
+    backdrop-filter: blur(24px) saturate(160%) brightness(110%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(110%);
+    border: 0.5px solid rgba(23, 162, 122, 0.25);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.07) 0%,
+      rgba(23,162,122,0.04) 40%,
+      rgba(255,255,255,0.02) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .glass-dark {
+    background: rgba(4, 52, 44, 0.45);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border: 0.5px solid rgba(23, 162, 122, 0.2);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(255,255,255,0.05) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  /* Reflet eau en haut des cards */
+  .glass::after, .glass-dark::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ═══════════════════════════════════════
+     NAVBAR
+  ═══════════════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 0;
+    transition: all 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(4, 52, 44, 0.55);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border-bottom: 0.5px solid rgba(23,162,122,0.2);
+    padding: 12px 0;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-wrap img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--white);
+    font-family: 'Inter', Helvetica, sans-serif;
+  }
+
+  .logo-text span { color: var(--amber); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav ul a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  nav ul a:hover { color: var(--white); }
+  nav ul a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    background: var(--amber);
+    color: var(--teal-ink) !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+    transition: all 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: #ffc04d !important;
+    color: var(--teal-ink) !important;
+    transform: translateY(-1px);
+  }
+
+  .nav-cta::after { display: none !important; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(4, 52, 44, 0.97);
+    backdrop-filter: blur(40px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--amber); }
+
+  .mobile-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--white);
+    background: none;
+    border: none;
+  }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+  }
+
+  .hero-content {
+    max-width: 780px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 32px;
+    background: rgba(245,166,35,0.1);
+    border: 0.5px solid rgba(245,166,35,0.3);
+  }
+
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .hero-title .accent {
+    color: var(--teal-vivid);
+    display: block;
+  }
+
+  .hero-tagline {
+    font-size: clamp(16px, 2vw, 22px);
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--teal-ink);
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,166,35,0.35); }
+  .btn-primary:hover::before { opacity: 1; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 0.5px solid rgba(23,162,122,0.2);
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--amber);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+  }
+
+  /* Hero visual right */
+  .hero-visual {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 520px;
+    height: 520px;
+    pointer-events: none;
+  }
+
+  .hero-flex {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    width: 100%;
+  }
+
+  .hero-right {
+    flex-shrink: 0;
+    position: relative;
+    width: 420px;
+    height: 420px;
+  }
+
+  /* Hexagonal node animation */
+  .hex-ring {
+    position: absolute;
+    inset: 0;
+    animation: hexRotate 30s linear infinite;
+  }
+
+  @keyframes hexRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hex-ring-2 {
+    animation-duration: 20s;
+    animation-direction: reverse;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION TITLES
+  ═══════════════════════════════════════ */
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    padding: 6px 16px;
+    border: 0.5px solid rgba(245,166,35,0.3);
+    border-radius: 100px;
+    background: rgba(245,166,35,0.06);
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .section-title .teal { color: var(--teal-vivid); }
+
+  .section-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: À PROPOS
+  ═══════════════════════════════════════ */
+  #about {
+    padding: 120px 0;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .about-card {
+    padding: 48px;
+  }
+
+  .about-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+  }
+
+  .about-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 16px;
+  }
+
+  .about-card .quote {
+    font-size: 20px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--white);
+    border-left: 3px solid var(--amber);
+    padding-left: 20px;
+    margin: 28px 0;
+    line-height: 1.4;
+  }
+
+  .pillar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pillar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    background: rgba(23,162,122,0.06);
+    border: 0.5px solid rgba(23,162,122,0.15);
+    transition: all 0.3s;
+  }
+
+  .pillar-item:hover {
+    background: rgba(23,162,122,0.12);
+    border-color: rgba(23,162,122,0.35);
+    transform: translateX(4px);
+  }
+
+  .pillar-icon {
+    width: 36px; height: 36px;
+    background: var(--amber);
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .pillar-text h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .pillar-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: EXPERTISES
+  ═══════════════════════════════════════ */
+  #expertise {
+    padding: 120px 0;
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .expertise-card {
+    padding: 40px 32px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .expertise-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(23,162,122,0.5) !important;
+    background: rgba(10, 92, 74, 0.2) !important;
+  }
+
+  .expertise-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--teal-core), var(--teal-vivid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .expertise-icon .amber-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    top: -3px; right: -3px;
+  }
+
+  .expertise-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .expertise-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .expertise-tag {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal-vivid);
+    padding: 4px 12px;
+    border: 0.5px solid rgba(23,162,122,0.3);
+    border-radius: 100px;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: PRODUITS
+  ═══════════════════════════════════════ */
+  #products {
+    padding: 120px 0;
+  }
+
+  .product-hero {
+    padding: 64px;
+    margin-bottom: 40px;
+  }
+
+  .product-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .product-badge-amber {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+    background: var(--amber);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .product-title {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--amber);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .product-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .product-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+
+  /* PCB Visual */
+  .pcb-visual {
+    width: 220px;
+    height: 220px;
+    border-radius: 16px;
+    background: #001a14;
+    border: 1px solid rgba(23,162,122,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .pcb-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+  }
+
+  .pcb-lines line {
+    stroke: #17A27A;
+    stroke-width: 1;
+  }
+
+  .pcb-core {
+    position: relative;
+    z-index: 2;
+  }
+
+  .led-pulse {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: ledBlink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes ledBlink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--amber), 0 0 20px rgba(245,166,35,0.4); }
+    50% { opacity: 0.3; box-shadow: none; }
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .spec-card {
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .spec-card .spec-icon { font-size: 20px; margin-bottom: 10px; }
+  .spec-card .spec-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal-vivid);
+    margin-bottom: 6px;
+  }
+  .spec-card .spec-val {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: VISION
+  ═══════════════════════════════════════ */
+  #vision {
+    padding: 120px 0;
+  }
+
+  .vision-wrap {
+    padding: 80px 64px;
+    text-align: center;
+  }
+
+  .vision-main {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    color: var(--white);
+    max-width: 700px;
+    margin: 0 auto 32px;
+  }
+
+  .vision-main .amber { color: var(--amber); }
+  .vision-main .teal { color: var(--teal-vivid); }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .vision-card {
+    padding: 36px 28px;
+    text-align: left;
+  }
+
+  .vision-num {
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(23,162,122,0.2);
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -2px;
+  }
+
+  .vision-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .vision-card p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: ÉQUIPE / COLLECTIF
+  ═══════════════════════════════════════ */
+  #team {
+    padding: 120px 0;
+  }
+
+  .team-statement {
+    padding: 48px 56px;
+    max-width: 760px;
+    margin: 0 auto 64px;
+    text-align: center;
+  }
+
+  .team-statement p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .team-statement strong { color: var(--white); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .skill-track {
+    padding: 28px 32px;
+  }
+
+  .skill-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .skill-name span:first-child {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.5px;
+  }
+
+  .skill-name span:last-child {
+    font-size: 11px;
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  .skill-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--teal-vivid), var(--amber));
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION: CONTACT
+  ═══════════════════════════════════════ */
+  #contact {
+    padding: 120px 0 160px;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact-info {
+    padding: 48px;
+  }
+
+  .contact-info h3 {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .contact-info p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contact-item-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(245,166,35,0.12);
+    border: 0.5px solid rgba(245,166,35,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+
+  .contact-item-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+
+  .contact-item-text strong {
+    display: block;
+    color: var(--white);
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* Form */
+  .contact-form {
+    padding: 48px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(23,162,122,0.2);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 14px;
+    font-family: 'Inter', Helvetica, sans-serif;
+    outline: none;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--teal-vivid);
+    background: rgba(23,162,122,0.06);
+    box-shadow: 0 0 0 3px rgba(23,162,122,0.1);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.2);
+  }
+
+  .form-group select option { background: var(--teal-ink); color: var(--white); }
+
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--amber);
+    color: var(--teal-ink);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: #ffc04d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(245,166,35,0.35);
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 0.5px solid rgba(23,162,122,0.15);
+    padding: 48px 0 32px;
+    background: rgba(4,52,44,0.3);
+    backdrop-filter: blur(20px);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-brand .logo-wrap img {
+    height: 28px;
+    width: auto;
+  }
+
+  .footer-tagline {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--amber); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-geo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+  }
+
+  .footer-geo::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal-vivid);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ═══════════════════════════════════════
+     SCROLL ANIMATIONS
+  ═══════════════════════════════════════ */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    nav ul, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .hero-flex { flex-direction: column; gap: 40px; }
+    .hero-right { width: 280px; height: 280px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .spec-grid { grid-template-columns: repeat(2, 1fr); }
+    .vision-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-links { flex-wrap: wrap; gap: 16px; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .product-hero-inner { grid-template-columns: 1fr; }
+    .product-hero { padding: 40px; }
+    .contact-info, .contact-form { padding: 32px; }
+    .about-card { padding: 32px; }
+    .vision-wrap { padding: 48px 32px; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    .hero-title { font-size: 40px; }
+    .nav-inner { padding: 0 20px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Grain overlay -->
-<div class="grain" aria-hidden="true"></div>
+<!-- BACKGROUND -->
+<div class="bg-canvas">
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+  <div class="water-grid"></div>
+</div>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor" aria-hidden="true"></div>
-<div class="cursor-trail" id="cursorTrail" aria-hidden="true"></div>
-
-<!-- Mobile menu -->
-<div class="mob-menu" id="mobMenu" role="dialog" aria-label="Navigation mobile">
-  <button class="mob-close" onclick="closeMob()" aria-label="Fermer">✕</button>
-  <a href="#mission" onclick="closeMob()">Mission</a>
-  <a href="#expertise" onclick="closeMob()">Expertise</a>
-  <a href="#product" onclick="closeMob()">Produit</a>
-  <a href="#vision" onclick="closeMob()">Vision</a>
-  <a href="#contact" onclick="closeMob()">Contact</a>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#hero" onclick="toggleMenu()">Accueil</a>
+  <a href="#about" onclick="toggleMenu()">À Propos</a>
+  <a href="#expertise" onclick="toggleMenu()">Expertises</a>
+  <a href="#products" onclick="toggleMenu()">Produits</a>
+  <a href="#vision" onclick="toggleMenu()">Vision</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
 
 <!-- NAVBAR -->
-<nav id="nav" role="navigation" aria-label="Navigation principale">
+<nav id="navbar">
   <div class="nav-inner">
-    <a href="#hero" class="logo" aria-label="DATAIKOS — Accueil">
-      DATA<em>I</em>KOS
-      <span class="logo-mark" aria-hidden="true"></span>
+    <a href="#hero" class="logo-wrap">
+      <!-- Logo sur fond blanc (dataikos logo 2.png) pour la navbar sombre -->
+      <img src="dataikos logo 2.png" alt="DATAIKOS" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%2317A27A%22/%3E%3Ctext x=%2240%22 y=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22%3ELOGO%3C/text%3E%3C/svg%3E';">
+      <span class="logo-text">DATA<span>I</span>KOS</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#mission">Mission</a></li>
-      <li><a href="#expertise">Expertise</a></li>
-      <li><a href="#product">Produit</a></li>
+
+    <ul>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#expertise">Expertises</a></li>
+      <li><a href="#products">Produits</a></li>
       <li><a href="#vision">Vision</a></li>
-      <li><a href="#contact" class="nav-cta-link">Contact</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
-    <button class="hamburger" onclick="openMob()" aria-label="Ouvrir le menu" aria-expanded="false">
+
+    <div class="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
-    </button>
+    </div>
   </div>
 </nav>
 
-<!-- ═══════════════════════════
+<!-- ════════════════════════════════════════
      HERO
-═══════════════════════════ -->
-<section id="hero" aria-label="Accueil">
-  <div class="hero-canvas-wrap" aria-hidden="true">
-    <canvas id="heroCanvas"></canvas>
-  </div>
-
-  <div class="hero-left">
-    <div>
-      <div class="hero-origin" aria-label="Origine: Douala, Cameroun, World">
-        <span class="hero-origin-dot" aria-hidden="true"></span>
-        <span class="hero-origin-text">Douala · Cameroun · World</span>
-      </div>
-
-      <h1 class="hero-title">
-        <span class="word-distributed">Distributed</span>
-        <span class="word-intelligence">Intelligence.</span>
-        <span class="word-engineered">Engineered.</span>
-      </h1>
-
-      <p class="hero-desc">
-        Collectif d'étudiants ingénieurs et chercheurs fondé au cœur de l'Afrique. Edge AI, IoT industriel, infrastructure tech — opérant aux standards de la Silicon Valley.
-      </p>
-
-      <div class="hero-ctas">
-        <a href="#expertise" class="btn btn-amber">Découvrir →</a>
-        <a href="#contact" class="btn btn-outline">Nous contacter</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-stats-block">
-      <div class="stats-row">
-        <div>
-          <div class="stat-val">3+</div>
-          <div class="stat-label">Domaines tech</div>
+════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-flex">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Douala · Cameroun · World
         </div>
-        <div>
-          <div class="stat-val">∞</div>
-          <div class="stat-label">Impact Afrique</div>
-        </div>
-        <div>
-          <div class="stat-val">01</div>
-          <div class="stat-label">Produit signature</div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="hero-bottom" aria-hidden="true">
-    <div class="ticker">
-      <span class="ticker-item">Edge AI <span class="sep">◆</span></span>
-      <span class="ticker-item">IoT Industriel <span class="sep">◆</span></span>
-      <span class="ticker-item">Infrastructure Tech <span class="sep">◆</span></span>
-      <span class="ticker-item">TinyML <span class="sep">◆</span></span>
-      <span class="ticker-item">Smart Cities <span class="sep">◆</span></span>
-      <span class="ticker-item">Data Science <span class="sep">◆</span></span>
-      <span class="ticker-item">VIBE SHIELD <span class="sep">◆</span></span>
-      <span class="ticker-item">Douala · World <span class="sep">◆</span></span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item">Edge AI <span class="sep">◆</span></span>
-      <span class="ticker-item">IoT Industriel <span class="sep">◆</span></span>
-      <span class="ticker-item">Infrastructure Tech <span class="sep">◆</span></span>
-      <span class="ticker-item">TinyML <span class="sep">◆</span></span>
-      <span class="ticker-item">Smart Cities <span class="sep">◆</span></span>
-      <span class="ticker-item">Data Science <span class="sep">◆</span></span>
-      <span class="ticker-item">VIBE SHIELD <span class="sep">◆</span></span>
-      <span class="ticker-item">Douala · World <span class="sep">◆</span></span>
-    </div>
-  </div>
-</section>
+        <h1 class="hero-title">
+          Distributed
+          <span class="accent">Intelligence.</span>
+        </h1>
+        <p class="hero-tagline">"Engineered."</p>
 
-<!-- ═══════════════════════════
-     MISSION
-═══════════════════════════ -->
-<section id="mission" aria-labelledby="mission-title">
-  <div class="mission-bg-stripe" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="mission-grid">
-      <div class="mission-left">
-        <div class="section-eyebrow reveal">Notre Mission</div>
-        <h2 id="mission-title" class="section-title-large reveal">
-          At home<br>in <span class="accent">Silicon Valley</span><br>
-          <span class="dim">and Douala.</span>
-        </h2>
-        <blockquote class="mission-quote reveal">
-          "We don't follow the future.<br>We build it."
-          <cite class="author">— DATAIKOS Manifesto</cite>
-        </blockquote>
-        <div class="mission-body reveal">
-          <p>DATAIKOS est un collectif d'étudiants polytechniciens et chercheurs fondé au cœur de l'Afrique, opérant avec les exigences d'une deeptech mondiale.</p>
-          <p>Notre différenciateur : une vision Afro-tech futuriste et crédible, ancrée dans les réalités du continent africain tout en portant une ambition planétaire.</p>
-        </div>
-      </div>
-
-      <div class="pillar-stack" role="list">
-        <div class="pillar reveal" role="listitem">
-          <div class="pillar-num">01 / PILIER</div>
-          <div class="pillar-title">Intelligence Distribuée</div>
-          <div class="pillar-desc">Traitement au plus près des données, parfois dans le cloud — toujours optimal.</div>
-        </div>
-        <div class="pillar reveal" role="listitem">
-          <div class="pillar-num">02 / PILIER</div>
-          <div class="pillar-title">Ingénierie de Précision</div>
-          <div class="pillar-desc">Chaque circuit, chaque ligne de code, chaque interface reflète l'excellence.</div>
-        </div>
-        <div class="pillar reveal" role="listitem">
-          <div class="pillar-num">03 / PILIER</div>
-          <div class="pillar-title">Ancrage Africain, Ambition Mondiale</div>
-          <div class="pillar-desc">Douala comme point de départ. Le monde comme terrain de jeu.</div>
-        </div>
-        <div class="pillar reveal" role="listitem">
-          <div class="pillar-num">04 / PILIER</div>
-          <div class="pillar-title">Cohérence Totale</div>
-          <div class="pillar-desc">Du PCB à l'interface utilisateur, la marque est un système unifié.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     EXPERTISE
-═══════════════════════════ -->
-<section id="expertise" aria-labelledby="expertise-title">
-  <div class="wrap">
-    <div class="expertise-header">
-      <div>
-        <div class="section-eyebrow reveal">Nos Expertises</div>
-        <h2 id="expertise-title" class="section-title-large reveal">
-          Edge AI · IoT<br><span class="accent">Infrastructure.</span>
-        </h2>
-      </div>
-      <p class="expertise-header-right reveal">
-        De l'intelligence embarquée aux solutions cloud, nous couvrons l'intégralité du stack technologique moderne.
-      </p>
-    </div>
-
-    <div class="exp-grid" role="list">
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 4L4 13V22L22 31L40 22V13L22 4Z" stroke="#3D9B5E" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M4 22L22 31L40 22" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M4 31L22 40L40 31" stroke="rgba(61,155,94,0.4)" stroke-width="1" stroke-linecap="round"/>
-            <circle cx="22" cy="13" r="2.5" fill="#C8732A"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">Edge AI</h3>
-        <p class="exp-desc">Modèles déployés directement sur les appareils périphériques. Latence minimale, privacy maximale, intelligence locale.</p>
-        <span class="exp-tag">ML · TinyML · Inference</span>
-      </article>
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="4" y="4" width="16" height="16" rx="2" stroke="#3D9B5E" stroke-width="1.5"/>
-            <rect x="24" y="4" width="16" height="16" rx="2" stroke="#3D9B5E" stroke-width="1.5"/>
-            <rect x="4" y="24" width="16" height="16" rx="2" stroke="#3D9B5E" stroke-width="1.5"/>
-            <circle cx="32" cy="32" r="8" stroke="#C8732A" stroke-width="1.5"/>
-            <path d="M20 12H24M12 20V24M32 20V24" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="32" y1="29" x2="32" y2="35" stroke="#C8732A" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="29" y1="32" x2="35" y2="32" stroke="#C8732A" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">IoT Industriel</h3>
-        <p class="exp-desc">Architecture d'objets connectés pour l'industrie et les smart cities. Protocoles sécurisés, scalabilité by design.</p>
-        <span class="exp-tag">ESP32 · STM32 · MQTT</span>
-      </article>
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="4" y="8" width="36" height="24" rx="3" stroke="#3D9B5E" stroke-width="1.5"/>
-            <path d="M12 36H32M22 32V36" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M10 20L16 14L22 20L28 14L34 20" stroke="#C8732A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">Infrastructure Tech</h3>
-        <p class="exp-desc">Conception et déploiement d'infrastructures robustes. Du PCB à l'API, chaque couche orchestrée.</p>
-        <span class="exp-tag">FastAPI · Cloud · DevOps</span>
-      </article>
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="18" stroke="rgba(61,155,94,0.3)" stroke-width="1"/>
-            <circle cx="22" cy="22" r="6" fill="#C8732A"/>
-            <path d="M22 6C22 6 26 14 26 22C26 30 22 38 22 38" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M22 6C22 6 18 14 18 22C18 30 22 38 22 38" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M4 22H40" stroke="#3D9B5E" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">Solutions AI</h3>
-        <p class="exp-desc">NLP, vision par ordinateur, systèmes prédictifs adaptés aux réalités africaines et aux marchés émergents.</p>
-        <span class="exp-tag">Python · TensorFlow · NLP</span>
-      </article>
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 36L8 20L22 10L36 20L36 36Z" stroke="#3D9B5E" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M15 28L22 16L29 28H15Z" fill="rgba(200,115,42,0.15)" stroke="#C8732A" stroke-width="1"/>
-            <line x1="22" y1="21" x2="22" y2="24" stroke="#C8732A" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="22" cy="26.5" r="0.8" fill="#C8732A"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">Data Science</h3>
-        <p class="exp-desc">Analyse, modélisation et visualisation de données. Transformation de la donnée brute en intelligence actionnable.</p>
-        <span class="exp-tag">Pandas · Power BI · SQL</span>
-      </article>
-
-      <article class="exp-card reveal" role="listitem">
-        <div class="exp-icon" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="6" y="16" width="32" height="22" rx="2" stroke="#3D9B5E" stroke-width="1.5"/>
-            <path d="M14 16V12C14 9.79 15.79 8 18 8H26C28.21 8 30 9.79 30 12V16" stroke="#3D9B5E" stroke-width="1.5"/>
-            <circle cx="22" cy="27" r="4" stroke="#C8732A" stroke-width="1.5"/>
-            <path d="M26 31L30 35" stroke="#C8732A" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3 class="exp-title">Smart Cities</h3>
-        <p class="exp-desc">Systèmes intelligents pour les villes africaines de demain. Gestion des ressources, mobilité, sécurité urbaine.</p>
-        <span class="exp-tag">Sensors · Analytics · Urban</span>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     VIBE SHIELD
-═══════════════════════════ -->
-<section id="product" aria-labelledby="product-title">
-  <div class="product-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="product-layout">
-
-      <div class="product-left">
-        <div class="product-label reveal">
-          <span>⬡</span> Produit Signature
-        </div>
-        <h2 id="product-title" class="product-name reveal">
-          VIBE<br>SHIELD
-          <span class="sub">by DATAIKOS</span>
-        </h2>
-        <p class="product-desc reveal">
-          Notre hardware signature : un shield intelligent ESP32/STM32 intégrant l'IA embarquée (TinyML). Conçu pour l'industrie, pensé pour l'Afrique, construit pour le monde.
+        <p class="hero-desc">
+          DATAIKOS est un collectif d'étudiants ingénieurs et chercheurs spécialisés dans l'IA distribuée, l'Edge Computing et l'IoT industriel. Fondé à Douala, opérant aux standards de la Silicon Valley.
         </p>
 
-        <div class="spec-table reveal" role="table" aria-label="Spécifications techniques VIBE SHIELD">
-          <div class="spec-row" role="row">
-            <span class="spec-key" role="rowheader">Microcontrôleur</span>
-            <span class="spec-value" role="cell">ESP32 / STM32</span>
-          </div>
-          <div class="spec-row" role="row">
-            <span class="spec-key" role="rowheader">IA Embarquée</span>
-            <span class="spec-value" role="cell">TinyML on-device</span>
-          </div>
-          <div class="spec-row" role="row">
-            <span class="spec-key" role="rowheader">Connectivité</span>
-            <span class="spec-value" role="cell">WiFi · BLE · MQTT</span>
-          </div>
-          <div class="spec-row" role="row">
-            <span class="spec-key" role="rowheader">Design PCB</span>
-            <span class="spec-value" role="cell">Forest Ink · LED Amber</span>
-          </div>
-          <div class="spec-row" role="row">
-            <span class="spec-key" role="rowheader">Alimentation</span>
-            <span class="spec-value" role="cell">3.3V / 5V dual-rail</span>
-          </div>
+        <div class="hero-actions">
+          <a href="#expertise" class="btn-primary">Découvrir</a>
+          <a href="#contact" class="btn-outline">Nous contacter</a>
         </div>
 
-        <a href="#contact" class="btn btn-amber reveal">En savoir plus →</a>
-      </div>
-
-      <div class="product-right" aria-hidden="true">
-        <div class="pcb-container">
-          <div class="pcb-glow"></div>
-          <svg class="pcb-board" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- PCB board body -->
-            <rect x="20" y="20" width="380" height="380" rx="8" fill="#0D1A14" stroke="rgba(61,155,94,0.3)" stroke-width="1"/>
-
-            <!-- Grid lines PCB style -->
-            <defs>
-              <pattern id="pcbGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(61,155,94,0.06)" stroke-width="0.5"/>
-              </pattern>
-            </defs>
-            <rect x="20" y="20" width="380" height="380" fill="url(#pcbGrid)"/>
-
-            <!-- Corner mounting holes -->
-            <circle cx="44" cy="44" r="5" fill="none" stroke="rgba(61,155,94,0.25)" stroke-width="1.5"/>
-            <circle cx="376" cy="44" r="5" fill="none" stroke="rgba(61,155,94,0.25)" stroke-width="1.5"/>
-            <circle cx="44" cy="376" r="5" fill="none" stroke="rgba(61,155,94,0.25)" stroke-width="1.5"/>
-            <circle cx="376" cy="376" r="5" fill="none" stroke="rgba(61,155,94,0.25)" stroke-width="1.5"/>
-
-            <!-- Main IC: ESP32 -->
-            <rect x="140" y="140" width="140" height="100" rx="4" fill="#0A1A0F" stroke="rgba(61,155,94,0.5)" stroke-width="1.5"/>
-            <text x="210" y="185" text-anchor="middle" fill="rgba(61,155,94,0.7)" font-size="11" font-family="monospace" font-weight="700">ESP32-S3</text>
-            <text x="210" y="200" text-anchor="middle" fill="rgba(61,155,94,0.4)" font-size="7" font-family="monospace">WROOM-2</text>
-            <!-- IC pins -->
-            <g stroke="rgba(61,155,94,0.4)" stroke-width="1">
-              <line x1="140" y1="155" x2="125" y2="155"/><line x1="140" y1="165" x2="125" y2="165"/>
-              <line x1="140" y1="175" x2="125" y2="175"/><line x1="140" y1="185" x2="125" y2="185"/>
-              <line x1="140" y1="195" x2="125" y2="195"/><line x1="140" y1="205" x2="125" y2="205"/>
-              <line x1="140" y1="215" x2="125" y2="215"/><line x1="140" y1="225" x2="125" y2="225"/>
-              <line x1="280" y1="155" x2="295" y2="155"/><line x1="280" y1="165" x2="295" y2="165"/>
-              <line x1="280" y1="175" x2="295" y2="175"/><line x1="280" y1="185" x2="295" y2="185"/>
-              <line x1="280" y1="195" x2="295" y2="195"/><line x1="280" y1="205" x2="295" y2="205"/>
-              <line x1="280" y1="215" x2="295" y2="215"/><line x1="280" y1="225" x2="295" y2="225"/>
-            </g>
-
-            <!-- STM32 co-processor -->
-            <rect x="55" y="200" width="70" height="60" rx="2" fill="#081410" stroke="rgba(61,155,94,0.35)" stroke-width="1"/>
-            <text x="90" y="226" text-anchor="middle" fill="rgba(61,155,94,0.6)" font-size="8" font-family="monospace">STM32</text>
-            <text x="90" y="238" text-anchor="middle" fill="rgba(61,155,94,0.3)" font-size="6" font-family="monospace">F4 Series</text>
-
-            <!-- TinyML accelerator block -->
-            <rect x="55" y="60" width="80" height="60" rx="2" fill="#0A1A0F" stroke="rgba(200,115,42,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
-            <text x="95" y="86" text-anchor="middle" fill="rgba(200,115,42,0.6)" font-size="7" font-family="monospace">TinyML</text>
-            <text x="95" y="97" text-anchor="middle" fill="rgba(200,115,42,0.4)" font-size="6" font-family="monospace">ENGINE</text>
-
-            <!-- Antenna symbol -->
-            <rect x="310" y="55" width="80" height="30" rx="2" fill="#081410" stroke="rgba(61,155,94,0.25)" stroke-width="1"/>
-            <text x="350" y="73" text-anchor="middle" fill="rgba(61,155,94,0.5)" font-size="7" font-family="monospace">WiFi/BLE</text>
-
-            <!-- Traces (PCB routing) -->
-            <g stroke="rgba(61,155,94,0.3)" stroke-width="1.5" fill="none">
-              <!-- From STM32 to ESP32 -->
-              <polyline points="125,228 135,228 135,210 140,210"/>
-              <!-- From TinyML to STM32 -->
-              <polyline points="95,120 95,180 90,180 90,200"/>
-              <!-- From ESP32 to Antenna -->
-              <polyline points="280,175 310,175 310,70 310,70"/>
-              <!-- Power rail top -->
-              <line x1="20" y1="45" x2="400" y2="45" stroke-width="2" stroke="rgba(200,115,42,0.2)"/>
-              <line x1="20" y1="395" x2="400" y2="395" stroke-width="2" stroke="rgba(200,115,42,0.2)"/>
-            </g>
-
-            <!-- Capacitors (SMD) -->
-            <g fill="none" stroke="rgba(61,155,94,0.4)" stroke-width="1">
-              <rect x="320" y="130" width="14" height="8" rx="1"/>
-              <rect x="340" y="130" width="14" height="8" rx="1"/>
-              <rect x="320" y="148" width="14" height="8" rx="1"/>
-              <rect x="340" y="148" width="14" height="8" rx="1"/>
-            </g>
-
-            <!-- LED indicators (amber) -->
-            <circle cx="350" cy="350" r="7" fill="rgba(200,115,42,0.15)" stroke="rgba(200,115,42,0.5)" stroke-width="1">
-              <animate attributeName="opacity" values="0.6;1;0.6" dur="1.4s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="350" cy="350" r="4" fill="#C8732A" opacity="0.8">
-              <animate attributeName="opacity" values="0.5;1;0.5" dur="1.4s" repeatCount="indefinite"/>
-            </circle>
-
-            <circle cx="370" cy="350" r="5" fill="rgba(61,155,94,0.12)" stroke="rgba(61,155,94,0.4)" stroke-width="1">
-              <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="370" cy="350" r="3" fill="#3D9B5E" opacity="0.6">
-              <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- Connector (USB-C like) -->
-            <rect x="185" y="330" width="50" height="20" rx="3" fill="none" stroke="rgba(242,237,228,0.2)" stroke-width="1.5"/>
-            <text x="210" y="343" text-anchor="middle" fill="rgba(242,237,228,0.25)" font-size="7" font-family="monospace">USB-C</text>
-
-            <!-- Logo mark -->
-            <text x="360" y="390" text-anchor="middle" fill="rgba(61,155,94,0.15)" font-size="8" font-family="monospace" font-weight="700">DATAIKOS</text>
-          </svg>
-
-          <!-- Floating badges -->
-          <div class="badge-float" style="top:-20px;left:-30px">ESP32-S3</div>
-          <div class="badge-float" style="bottom:40px;right:-40px">TinyML</div>
-          <div class="badge-float" style="top:45%;left:-50px">WiFi · BLE</div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Domaines tech</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Impact Afrique</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">01</div>
+            <div class="stat-label">Produit Signature</div>
+          </div>
         </div>
       </div>
 
+      <!-- Hexagonal Visual -->
+      <div class="hero-right">
+        <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F5A623" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#F5A623" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="blur4">
+              <feGaussianBlur stdDeviation="4"/>
+            </filter>
+          </defs>
+
+          <!-- Outer glow -->
+          <circle cx="210" cy="210" r="180" fill="url(#glowGrad)" filter="url(#blur4)" opacity="0.4">
+            <animate attributeName="r" values="170;185;170" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.3;0.5;0.3" dur="4s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Rotating hex rings -->
+          <g style="transform-origin:210px 210px; animation: hexRotate 30s linear infinite">
+            <polygon points="210,40 350,125 350,295 210,380 70,295 70,125" fill="none" stroke="rgba(23,162,122,0.15)" stroke-width="1"/>
+          </g>
+          <g style="transform-origin:210px 210px; animation: hexRotate 20s linear infinite reverse">
+            <polygon points="210,80 320,142 320,278 210,340 100,278 100,142" fill="none" stroke="rgba(23,162,122,0.1)" stroke-width="0.5" stroke-dasharray="6 4"/>
+          </g>
+
+          <!-- Inner hex -->
+          <polygon points="210,110 300,160 300,260 210,310 120,260 120,160" fill="rgba(10,92,74,0.2)" stroke="rgba(23,162,122,0.3)" stroke-width="1"/>
+
+          <!-- Triskele arms large -->
+          <path d="M210 210 L270 130 L295 155 L235 220 Z" fill="#17A27A" opacity="0.7"/>
+          <path d="M210 210 L130 160 L118 188 L190 220 Z" fill="#0A5C4A" opacity="0.9"/>
+          <path d="M210 210 L210 300 L238 292 L222 218 Z" fill="#17A27A" opacity="0.6"/>
+
+          <!-- Center node amber pulsing -->
+          <rect x="196" y="196" width="28" height="28" rx="4" fill="#F5A623">
+            <animate attributeName="opacity" values="1;0.6;1" dur="1.5s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Node glow -->
+          <rect x="188" y="188" width="44" height="44" rx="8" fill="#F5A623" opacity="0.15" filter="url(#blur4)">
+            <animate attributeName="opacity" values="0.15;0.35;0.15" dur="1.5s" repeatCount="indefinite"/>
+          </rect>
+
+          <!-- Data nodes orbiting -->
+          <circle cx="210" cy="100" r="5" fill="#17A27A" opacity="0.7">
+            <animateTransform attributeName="transform" type="rotate" from="0 210 210" to="360 210 210" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="310" cy="260" r="4" fill="#F5A623" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" from="120 210 210" to="480 210 210" dur="16s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="110" cy="160" r="3" fill="#17A27A" opacity="0.5">
+            <animateTransform attributeName="transform" type="rotate" from="240 210 210" to="600 210 210" dur="20s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Connection lines -->
+          <line x1="210" y1="100" x2="210" y2="196" stroke="rgba(23,162,122,0.2)" stroke-width="0.5" stroke-dasharray="4 4"/>
+          <line x1="310" y1="260" x2="224" y2="210" stroke="rgba(245,166,35,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
+          <line x1="110" y1="160" x2="196" y2="202" stroke="rgba(23,162,122,0.15)" stroke-width="0.5" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════
+<!-- ════════════════════════════════════════
+     À PROPOS
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Qui sommes-nous</span>
+      <h2 class="section-title">At home in <span class="teal">Silicon Valley</span> and Douala.</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="glass-dark about-card fade-up">
+        <h3>Notre Mission</h3>
+        <div class="quote">"We don't follow the future. We build it."</div>
+        <p>DATAIKOS est un collectif d'étudiants polytechniciens et chercheurs fondé au cœur de l'Afrique, opérant avec les exigences d'une deeptech mondiale.</p>
+        <p>Notre différenciateur : une vision Afro-tech futuriste et crédible, ancrée dans les réalités du continent africain tout en portant une ambition planétaire.</p>
+      </div>
+
+      <div class="pillar-list fade-up">
+        <div class="pillar-item">
+          <div class="pillar-icon">⚡</div>
+          <div class="pillar-text">
+            <h4>Intelligence Distribuée</h4>
+            <p>Traitement au plus près des données, parfois dans le cloud — toujours optimal.</p>
+          </div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🔬</div>
+          <div class="pillar-text">
+            <h4>Ingénierie de Précision</h4>
+            <p>Chaque pixel, chaque ligne de code, chaque circuit reflète l'excellence.</p>
+          </div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🌍</div>
+          <div class="pillar-text">
+            <h4>Ancrage Africain, Ambition Mondiale</h4>
+            <p>Douala comme point de départ. Le monde comme terrain de jeu.</p>
+          </div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-icon">🔗</div>
+          <div class="pillar-text">
+            <h4>Cohérence Totale</h4>
+            <p>Du PCB à l'interface utilisateur, la marque est un système unifié.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     EXPERTISES
+════════════════════════════════════════ -->
+<section id="expertise">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Nos Expertises</span>
+      <h2 class="section-title">Edge AI · IoT · <span class="teal">Infrastructure</span></h2>
+      <p class="section-sub">De l'intelligence embarquée aux solutions cloud, nous couvrons l'intégralité du stack technologique.</p>
+    </div>
+
+    <div class="expertise-grid">
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#17A27A" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>Edge AI</h3>
+        <p>Modèles d'IA déployés directement sur les appareils périphériques. Latence minimale, privacy maximale, intelligence locale.</p>
+        <span class="expertise-tag">ML · TinyML · Inference</span>
+      </div>
+
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="7" height="7" rx="1" stroke="#17A27A" stroke-width="1.5"/>
+            <rect x="14" y="3" width="7" height="7" rx="1" stroke="#17A27A" stroke-width="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1" stroke="#17A27A" stroke-width="1.5"/>
+            <circle cx="17.5" cy="17.5" r="3.5" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M10 6.5H14M6.5 10V14M17.5 10V14" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>IoT Industriel</h3>
+        <p>Architecture d'objets connectés pour l'industrie et les smart cities. Protocoles sécurisés, scalabilité by design.</p>
+        <span class="expertise-tag">ESP32 · STM32 · MQTT</span>
+      </div>
+
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9L12 3L21 9V21H15V15H9V21H3V9Z" stroke="#17A27A" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="12" cy="11" r="2" fill="#F5A623"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>Infrastructure Tech</h3>
+        <p>Conception et déploiement d'infrastructures robustes. Du PCB à l'API, nous orchestrons chaque couche du système.</p>
+        <span class="expertise-tag">FastAPI · Cloud · DevOps</span>
+      </div>
+
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="3" fill="#F5A623"/>
+            <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 12H21" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="9" stroke="rgba(23,162,122,0.3)" stroke-width="1"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>Solutions AI</h3>
+        <p>Développement de modèles NLP, vision par ordinateur et systèmes prédictifs adaptés aux réalités africaines.</p>
+        <span class="expertise-tag">Python · TensorFlow · NLP</span>
+      </div>
+
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="3" width="20" height="14" rx="2" stroke="#17A27A" stroke-width="1.5"/>
+            <path d="M8 21H16M12 17V21" stroke="#17A27A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M7 8L10 11L14 7L17 10" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>Data Science</h3>
+        <p>Analyse, modélisation et visualisation de données. Transformation de la donnée brute en intelligence actionnable.</p>
+        <span class="expertise-tag">Pandas · Power BI · SQL</span>
+      </div>
+
+      <div class="glass expertise-card fade-up">
+        <div class="expertise-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <polygon points="12,2 22,20 2,20" fill="none" stroke="#17A27A" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="12" y1="9" x2="12" y2="13" stroke="#F5A623" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="16" r="1" fill="#F5A623"/>
+          </svg>
+          <div class="amber-dot"></div>
+        </div>
+        <h3>Smart Cities</h3>
+        <p>Systèmes intelligents pour les villes africaines de demain. Gestion des ressources, mobilité, sécurité urbaine.</p>
+        <span class="expertise-tag">Sensors · Analytics · Urban</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PRODUITS
+════════════════════════════════════════ -->
+<section id="products">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Produit Signature</span>
+      <h2 class="section-title">VIBE SHIELD <span class="teal">by DATAIKOS</span></h2>
+    </div>
+
+    <div class="glass-dark product-hero fade-up">
+      <div class="product-hero-inner">
+        <div>
+          <div class="product-badge-amber">⬡ Produit Signature</div>
+          <div class="product-title">VIBE SHIELD</div>
+          <div class="product-sub">by DATAIKOS</div>
+          <p class="product-desc">
+            Notre produit hardware signature : un shield intelligent basé sur ESP32/STM32 intégrant l'IA embarquée. Conçu pour l'industrie, pensé pour l'Afrique, construit pour le monde.
+          </p>
+          <a href="#contact" class="btn-primary">En savoir plus</a>
+        </div>
+
+        <!-- PCB Visual -->
+        <div class="pcb-visual">
+          <svg class="pcb-lines" viewBox="0 0 220 220" fill="none">
+            <!-- PCB traces -->
+            <line x1="20" y1="40" x2="90" y2="40" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="90" y1="40" x2="90" y2="80" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="20" y1="80" x2="60" y2="80" stroke="#17A27A" stroke-width="1"/>
+            <line x1="60" y1="80" x2="60" y2="110" stroke="#17A27A" stroke-width="1"/>
+            <line x1="130" y1="40" x2="200" y2="40" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="200" y1="40" x2="200" y2="90" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="160" y1="90" x2="200" y2="90" stroke="#17A27A" stroke-width="1"/>
+            <line x1="20" y1="140" x2="80" y2="140" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="80" y1="140" x2="80" y2="180" stroke="#17A27A" stroke-width="1"/>
+            <line x1="80" y1="180" x2="140" y2="180" stroke="#17A27A" stroke-width="1.5"/>
+            <line x1="140" y1="150" x2="200" y2="150" stroke="#17A27A" stroke-width="1"/>
+            <line x1="140" y1="150" x2="140" y2="180" stroke="#17A27A" stroke-width="1"/>
+            <!-- Vias -->
+            <circle cx="90" cy="40" r="4" fill="none" stroke="#17A27A" stroke-width="1.5"/>
+            <circle cx="200" cy="90" r="4" fill="none" stroke="#17A27A" stroke-width="1.5"/>
+            <circle cx="80" cy="180" r="4" fill="none" stroke="#17A27A" stroke-width="1.5"/>
+            <!-- IC chip outline -->
+            <rect x="95" y="90" width="70" height="50" rx="4" fill="none" stroke="#17A27A" stroke-width="1.5"/>
+            <text x="130" y="118" fill="#17A27A" font-size="7" text-anchor="middle" font-family="monospace">ESP32</text>
+            <!-- Pads -->
+            <rect x="85" y="97" width="10" height="5" rx="1" fill="rgba(23,162,122,0.5)"/>
+            <rect x="85" y="107" width="10" height="5" rx="1" fill="rgba(23,162,122,0.5)"/>
+            <rect x="85" y="117" width="10" height="5" rx="1" fill="rgba(23,162,122,0.5)"/>
+            <rect x="165" y="97" width="10" height="5" rx="1" fill="rgba(23,162,122,0.5)"/>
+            <rect x="165" y="107" width="10" height="5" rx="1" fill="rgba(23,162,122,0.5)"/>
+          </svg>
+
+          <div class="pcb-core">
+            <svg viewBox="0 0 60 60" width="60" height="60" fill="none">
+              <path d="M30 6L52 18L52 42L30 54L8 42L8 18Z" fill="rgba(23,162,122,0.3)" stroke="rgba(23,162,122,0.6)" stroke-width="1"/>
+              <path d="M30 30 L42 20 L46 24 L34 32 Z" fill="#17A27A" opacity="0.8"/>
+              <path d="M30 30 L18 22 L16 28 L26 32 Z" fill="#0A5C4A"/>
+              <path d="M30 30 L30 44 L36 42 L32 32 Z" fill="#17A27A" opacity="0.7"/>
+              <rect x="26" y="26" width="8" height="8" rx="1" fill="#F5A623"/>
+            </svg>
+          </div>
+
+          <div class="led-pulse"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="spec-grid fade-up">
+      <div class="glass spec-card">
+        <div class="spec-icon">🔧</div>
+        <div class="spec-name">Microcontrôleur</div>
+        <div class="spec-val">ESP32 / STM32</div>
+      </div>
+      <div class="glass spec-card">
+        <div class="spec-icon">🤖</div>
+        <div class="spec-name">IA embarquée</div>
+        <div class="spec-val">TinyML on-device</div>
+      </div>
+      <div class="glass spec-card">
+        <div class="spec-icon">📡</div>
+        <div class="spec-name">Connectivité</div>
+        <div class="spec-val">WiFi · BLE · MQTT</div>
+      </div>
+      <div class="glass spec-card">
+        <div class="spec-icon">⬡</div>
+        <div class="spec-name">Design</div>
+        <div class="spec-val">PCB Teal Ink · LED Amber</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
      VISION
-═══════════════════════════ -->
-<section id="vision" aria-labelledby="vision-title">
-  <div class="wrap vision-inner">
-    <div class="section-eyebrow reveal" style="color:rgba(200,115,42,0.8)">Notre Vision</div>
-    <h2 id="vision-title" class="vision-statement reveal">
-      <span class="line1">"We don't follow</span><br>
-      <span class="line2">the future.</span><br>
-      <span class="line3">We build it."</span>
-    </h2>
-    <div class="vision-divider reveal" aria-hidden="true"></div>
+════════════════════════════════════════ -->
+<section id="vision">
+  <div class="container">
+    <div class="glass-dark vision-wrap fade-up">
+      <span class="section-label">Notre Vision</span>
+      <p class="vision-main" style="margin-top:24px">
+        <span class="amber">"We don't follow</span><br>
+        the future.<br>
+        <span class="teal">We build it."</span>
+      </p>
+      <p style="color:rgba(255,255,255,0.45); font-size:14px; letter-spacing:1px;">DATAIKOS · Douala · Cameroun · World</p>
 
-    <div class="vision-cards" role="list">
-      <article class="vision-card reveal" role="listitem">
-        <div class="vision-card-num" aria-hidden="true">01</div>
-        <h3>Afrique d'abord</h3>
-        <p>Nous résolvons les défis africains avec des solutions de classe mondiale. L'impact local est notre boussole.</p>
-      </article>
-      <article class="vision-card reveal" role="listitem">
-        <div class="vision-card-num" aria-hidden="true">02</div>
-        <h3>Standards Silicon Valley</h3>
-        <p>Nos processus, notre code, notre design atteignent les standards des meilleures deeptech mondiales.</p>
-      </article>
-      <article class="vision-card reveal" role="listitem">
-        <div class="vision-card-num" aria-hidden="true">03</div>
-        <h3>Système Unifié</h3>
-        <p>Du PCB à l'interface, du hardware au SaaS — chaque couche de DATAIKOS parle le même langage.</p>
-      </article>
+      <div class="vision-grid">
+        <div class="glass vision-card fade-up">
+          <div class="vision-num">01</div>
+          <h4>Afrique d'abord</h4>
+          <p>Nous résolvons les défis africains avec des solutions de classe mondiale. L'impact local est notre boussole.</p>
+        </div>
+        <div class="glass vision-card fade-up">
+          <div class="vision-num">02</div>
+          <h4>Standards Silicon Valley</h4>
+          <p>Nos processus, notre code, notre design, tout atteint les standards des meilleures deeptech mondiales.</p>
+        </div>
+        <div class="glass vision-card fade-up">
+          <div class="vision-num">03</div>
+          <h4>Système Unifié</h4>
+          <p>Du PCB à l'interface, du hardware au SaaS — chaque couche de DATAIKOS parle le même langage.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════
+<!-- ════════════════════════════════════════
      COLLECTIF
-═══════════════════════════ -->
-<section id="collectif" aria-labelledby="collectif-title">
-  <div class="wrap">
-    <div class="collectif-layout">
-      <div class="collectif-left">
-        <div class="section-eyebrow reveal">Le Collectif</div>
-        <h2 id="collectif-title" class="section-title-large reveal">
-          Ingénieurs.<br><span class="accent">Chercheurs.</span><br><span class="dim">Builders.</span>
-        </h2>
-        <p class="collectif-statement reveal">
-          DATAIKOS n'est pas une startup. C'est un collectif qui construit le futur technologique africain avec les exigences des <em>meilleures institutions mondiales.</em>
-        </p>
+════════════════════════════════════════ -->
+<section id="team">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Le Collectif</span>
+      <h2 class="section-title">Ingénieurs. <span class="teal">Chercheurs.</span> Builders.</h2>
+    </div>
 
-        <div class="skill-list" role="list">
-          <div class="skill-item reveal" role="listitem">
-            <div class="skill-header">
-              <span class="skill-name-txt">Intelligence Artificielle</span>
-              <span class="skill-pct">95%</span>
-            </div>
-            <div class="skill-track" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-fill" data-w="95"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal" role="listitem">
-            <div class="skill-header">
-              <span class="skill-name-txt">Edge Computing</span>
-              <span class="skill-pct">90%</span>
-            </div>
-            <div class="skill-track" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-fill" data-w="90"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal" role="listitem">
-            <div class="skill-header">
-              <span class="skill-name-txt">IoT & Hardware</span>
-              <span class="skill-pct">88%</span>
-            </div>
-            <div class="skill-track" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-fill" data-w="88"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal" role="listitem">
-            <div class="skill-header">
-              <span class="skill-name-txt">Data Science</span>
-              <span class="skill-pct">92%</span>
-            </div>
-            <div class="skill-track" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-fill" data-w="92"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal" role="listitem">
-            <div class="skill-header">
-              <span class="skill-name-txt">Infrastructure Cloud</span>
-              <span class="skill-pct">80%</span>
-            </div>
-            <div class="skill-track" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-              <div class="skill-fill" data-w="80"></div>
-            </div>
-          </div>
-        </div>
+    <div class="glass-dark team-statement fade-up">
+      <p>
+        DATAIKOS n'est pas une startup. C'est un <strong>collectif d'étudiants polytechniciens et chercheurs</strong> qui construisent le futur technologique africain avec les exigences et la rigueur des meilleures institutions mondiales.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>Intelligence Artificielle</span><span>95%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
       </div>
-
-      <!-- Diagram -->
-      <div class="collectif-right" aria-hidden="true">
-        <div class="globe-diagram">
-          <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" width="360" height="360">
-            <!-- Orbit rings -->
-            <ellipse cx="180" cy="180" rx="160" ry="60" stroke="rgba(61,155,94,0.08)" stroke-width="1"/>
-            <ellipse cx="180" cy="180" rx="120" ry="120" stroke="rgba(61,155,94,0.08)" stroke-width="1"/>
-            <ellipse cx="180" cy="180" rx="80" ry="30" stroke="rgba(61,155,94,0.12)" stroke-width="1" transform="rotate(45 180 180)"/>
-            <!-- Center node -->
-            <circle cx="180" cy="180" r="28" fill="rgba(26,77,46,0.6)" stroke="rgba(61,155,94,0.5)" stroke-width="1.5"/>
-            <text x="180" y="176" text-anchor="middle" fill="rgba(242,237,228,0.8)" font-size="7" font-family="monospace">DATA</text>
-            <text x="180" y="187" text-anchor="middle" fill="#C8732A" font-size="7" font-family="monospace" font-weight="700">IKOS</text>
-            <!-- Satellite nodes -->
-            <g>
-              <circle cx="180" cy="40" r="12" fill="rgba(26,77,46,0.5)" stroke="rgba(61,155,94,0.4)" stroke-width="1">
-                <animateTransform attributeName="transform" type="rotate" from="0 180 180" to="360 180 180" dur="12s" repeatCount="indefinite"/>
-              </circle>
-              <text x="180" y="44" text-anchor="middle" fill="rgba(242,237,228,0.5)" font-size="6" font-family="monospace">AI</text>
-              <line x1="180" y1="52" x2="180" y2="152" stroke="rgba(61,155,94,0.1)" stroke-width="0.5" stroke-dasharray="3 3"/>
-            </g>
-            <g>
-              <circle cx="320" cy="180" r="10" fill="rgba(26,77,46,0.5)" stroke="rgba(200,115,42,0.4)" stroke-width="1">
-                <animateTransform attributeName="transform" type="rotate" from="120 180 180" to="480 180 180" dur="16s" repeatCount="indefinite"/>
-              </circle>
-              <text x="320" y="184" text-anchor="middle" fill="rgba(200,115,42,0.5)" font-size="6" font-family="monospace">IoT</text>
-            </g>
-            <g>
-              <circle cx="40" cy="260" r="8" fill="rgba(26,77,46,0.5)" stroke="rgba(61,155,94,0.3)" stroke-width="1">
-                <animateTransform attributeName="transform" type="rotate" from="240 180 180" to="600 180 180" dur="20s" repeatCount="indefinite"/>
-              </circle>
-              <text x="40" y="264" text-anchor="middle" fill="rgba(242,237,228,0.4)" font-size="6" font-family="monospace">PCB</text>
-            </g>
-            <!-- Subtle cross -->
-            <line x1="180" y1="100" x2="180" y2="260" stroke="rgba(61,155,94,0.05)" stroke-width="1"/>
-            <line x1="100" y1="180" x2="260" y2="180" stroke="rgba(61,155,94,0.05)" stroke-width="1"/>
-          </svg>
-        </div>
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>Edge Computing</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+      </div>
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>IoT & Hardware</span><span>88%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+      </div>
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>Data Science</span><span>92%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+      </div>
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>Développement Web/API</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+      </div>
+      <div class="glass skill-track fade-up">
+        <div class="skill-name"><span>Infrastructure Cloud</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════
+<!-- ════════════════════════════════════════
      CONTACT
-═══════════════════════════ -->
-<section id="contact" aria-labelledby="contact-title">
-  <div class="wrap">
-    <div class="section-eyebrow reveal">Contact</div>
-    <h2 id="contact-title" class="section-title-large reveal" style="margin-bottom:64px">
-      Construisons<br><span class="accent">ensemble.</span>
-    </h2>
+════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">Construisons <span class="teal">ensemble.</span></h2>
+      <p class="section-sub">Un projet, une collaboration, une idée à développer ? Nous sommes prêts.</p>
+    </div>
 
-    <div class="contact-layout">
-      <div class="contact-left reveal">
-        <p class="contact-intro">
-          Un projet, une collaboration, une idée à développer ? Collectif basé à Douala, connectés au monde.
-        </p>
+    <div class="contact-grid">
+      <div class="glass-dark contact-info fade-up">
+        <h3>DATAIKOS</h3>
+        <p>Collectif d'étudiants ingénieurs et chercheurs. Basés à Douala, connectés au monde.</p>
 
-        <div class="contact-details">
-          <div class="contact-row">
-            <div class="contact-row-icon" aria-hidden="true">📍</div>
-            <div class="contact-row-body">
-              <div class="contact-row-label">Localisation</div>
-              <div class="contact-row-val">Douala, Cameroun · World</div>
+        <div class="contact-detail">
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <strong>Localisation</strong>
+              Douala, Cameroun · World
             </div>
           </div>
-          <div class="contact-row">
-            <div class="contact-row-icon" aria-hidden="true">✉</div>
-            <div class="contact-row-body">
-              <div class="contact-row-label">Email</div>
-              <div class="contact-row-val">
-                <a href="mailto:meilleurd2001@gmail.com" style="color:var(--amber);text-decoration:none;">meilleurd2001@gmail.com</a>
-              </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-text">
+              <strong>Email</strong>
+              meilleurd2001@gmail.com
             </div>
           </div>
-          <div class="contact-row">
-            <div class="contact-row-icon" aria-hidden="true">🌐</div>
-            <div class="contact-row-body">
-              <div class="contact-row-label">Web</div>
-              <div class="contact-row-val">dataikos.com</div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🌐</div>
+            <div class="contact-item-text">
+              <strong>Web</strong>
+              dataikos.com
             </div>
           </div>
-          <div class="contact-row">
-            <div class="contact-row-icon" aria-hidden="true">⚡</div>
-            <div class="contact-row-body">
-              <div class="contact-row-label">Secteurs</div>
-              <div class="contact-row-val">Industrie · Smart Cities · Entreprises</div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⚡</div>
+            <div class="contact-item-text">
+              <strong>Secteurs</strong>
+              Industrie · Smart Cities · Entreprises
             </div>
           </div>
         </div>
 
-        <div class="socials" role="list" aria-label="Réseaux sociaux">
-          <a href="https://www.linkedin.com/in/david-meilleur-aat-ndongo-bb43b0314" target="_blank" rel="noopener" class="social-btn" role="listitem" aria-label="LinkedIn">in</a>
-          <a href="#" class="social-btn" role="listitem" aria-label="Twitter / X">𝕏</a>
-          <a href="#" class="social-btn" role="listitem" aria-label="YouTube">▶</a>
+        <div style="margin-top:40px; padding-top:32px;">
+          <p style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:16px; font-weight:700;">Suivez-nous</p>
+          <div style="display:flex; gap:12px;">
+            <a href="https://www.linkedin.com/in/david-meilleur-aat-ndongo-bb43b0314" target="_blank" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">in</a>
+            <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">𝕏</a>
+            <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(23,162,122,0.1);border:0.5px solid rgba(23,162,122,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;transition:all 0.2s;" onmouseover="this.style.background='rgba(245,166,35,0.15)';this.style.borderColor='rgba(245,166,35,0.4)'" onmouseout="this.style.background='rgba(23,162,122,0.1)';this.style.borderColor='rgba(23,162,122,0.2)'">▶</a>
+          </div>
         </div>
       </div>
 
-      <div class="contact-form reveal" role="form" aria-label="Formulaire de contact">
-        <div class="form-row-two">
-          <div class="field-wrap">
-            <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name">
-            <label for="prenom" class="field-label">Prénom</label>
+      <div class="glass contact-form fade-up">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" placeholder="Jean">
           </div>
-          <div class="field-wrap">
-            <input type="text" id="nom" name="nom" placeholder=" " autocomplete="family-name">
-            <label for="nom" class="field-label">Nom</label>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" placeholder="Dupont">
           </div>
         </div>
-        <div class="field-wrap">
-          <input type="email" id="email" name="email" placeholder=" " autocomplete="email">
-          <label for="email" class="field-label">Email</label>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="jean@example.com">
         </div>
-        <div class="field-wrap">
-          <select id="sujet" name="sujet">
-            <option value="" disabled selected>—</option>
+        <div class="form-group">
+          <label>Sujet</label>
+          <select>
+            <option value="">Sélectionner un sujet</option>
             <option>Collaboration technique</option>
-            <option>VIBE SHIELD — Produit</option>
+            <option>VIBE SHIELD - Produit</option>
             <option>Data Science / IA</option>
             <option>Smart Cities / IoT</option>
             <option>Partenariat</option>
             <option>Autre</option>
           </select>
-          <label for="sujet" class="field-label">Sujet</label>
         </div>
-        <div class="field-wrap">
-          <textarea id="message" name="message" placeholder=" "></textarea>
-          <label for="message" class="field-label">Message</label>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Décrivez votre projet ou votre demande..."></textarea>
         </div>
-        <button type="submit" class="form-submit" id="formSubmit">
-          Envoyer le message →
-        </button>
+        <button class="form-submit">Envoyer le message →</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════
+<!-- ════════════════════════════════════════
      FOOTER
-═══════════════════════════ -->
-<footer role="contentinfo">
-  <div class="wrap">
+════════════════════════════════════════ -->
+<footer>
+  <div class="container">
     <div class="footer-inner">
-      <div>
-        <div class="footer-brand-name">DATA<em>I</em>KOS</div>
-        <div class="footer-tagline">"Distributed Intelligence. Engineered."</div>
+      <div class="footer-brand">
+        <a href="#hero" class="logo-wrap" style="text-decoration:none">
+          <!-- Logo sur fond vert (dataikos logo 1.png) pour le footer -->
+          <img src="dataikos logo 1.png" alt="DATAIKOS" style="height:28px; width:auto;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%2317A27A%22/%3E%3Ctext x=%2240%22 y=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22%3ELOGO%3C/text%3E%3C/svg%3E';">
+          <span style="font-size:16px;font-weight:900;letter-spacing:3px;color:var(--white); margin-left:8px;">DATAIKOS</span>
+        </a>
+        <span class="footer-tagline">"Distributed Intelligence. Engineered."</span>
       </div>
-      <nav class="footer-links" aria-label="Navigation footer">
-        <a href="#mission">Mission</a>
-        <a href="#expertise">Expertise</a>
-        <a href="#product">Produit</a>
+
+      <div class="footer-links">
+        <a href="#about">À Propos</a>
+        <a href="#expertise">Expertises</a>
+        <a href="#products">Produits</a>
         <a href="#vision">Vision</a>
         <a href="#contact">Contact</a>
-      </nav>
-      <div class="footer-geo">
-        <span class="footer-geo-dot" aria-hidden="true"></span>
-        <span>Douala, Cameroun</span>
-        <span aria-hidden="true">· © 2026 DATAIKOS</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+        <div class="footer-geo">Douala - Cameroun</div>
+        <div class="footer-copy">© 2026 DATAIKOS — Tous droits réservés</div>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- ═══════════════════════════
-     JAVASCRIPT
-═══════════════════════════ -->
 <script>
-(function() {
-  'use strict';
+// ── Navbar scroll ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
 
-  // ── Custom Cursor ──
-  const cursor = document.getElementById('cursor');
-  const trail = document.getElementById('cursorTrail');
-  let mx = 0, my = 0, tx = 0, ty = 0;
+// ── Mobile menu ──
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
 
-  if (cursor && trail) {
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-    });
-
-    function animTrail() {
-      tx += (mx - tx) * 0.12;
-      ty += (my - ty) * 0.12;
-      trail.style.left = tx + 'px';
-      trail.style.top = ty + 'px';
-      requestAnimationFrame(animTrail);
+// ── Scroll animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+      // Skill bars
+      el.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
     }
-    animTrail();
-
-    document.querySelectorAll('a, button, .exp-card, .pillar, .vision-card').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-    });
-  }
-
-  // ── Navbar scroll ──
-  const nav = document.getElementById('nav');
-  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // ── Mobile menu ──
-  window.openMob = () => {
-    document.getElementById('mobMenu').classList.add('open');
-    document.querySelector('.hamburger').setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  };
-  window.closeMob = () => {
-    document.getElementById('mobMenu').classList.remove('open');
-    document.querySelector('.hamburger').setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  };
-
-  // ── Scroll reveal ──
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        // Skill bars
-        e.target.querySelectorAll('.skill-fill').forEach(bar => {
-          bar.style.width = bar.dataset.w + '%';
-        });
-        // Also trigger skills if the section comes into view
-        if (e.target.classList.contains('skill-item')) {
-          e.target.querySelector('.skill-fill') && (e.target.querySelector('.skill-fill').style.width = e.target.querySelector('.skill-fill').dataset.w + '%');
-        }
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach((el, i) => {
-    el.style.transitionDelay = (i % 4) * 80 + 'ms';
-    revealObs.observe(el);
   });
+}, { threshold: 0.15 });
 
-  // ── Smooth scroll ──
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Also trigger skill bars if already visible
+document.querySelectorAll('.skill-fill').forEach(bar => {
+  const rect = bar.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    bar.style.width = bar.dataset.width + '%';
+  }
+});
+
+// ── Smooth anchor scroll ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   });
+});
 
-  // ── Form submit feedback ──
-  const submitBtn = document.getElementById('formSubmit');
-  if (submitBtn) {
-    submitBtn.addEventListener('click', function() {
-      const orig = this.textContent;
-      this.textContent = '✓ Message envoyé !';
-      this.style.background = '#3D9B5E';
-      this.style.color = '#FAFAF8';
-      setTimeout(() => {
-        this.textContent = orig;
-        this.style.background = '';
-        this.style.color = '';
-      }, 3000);
-    });
+// ── Form submit ──
+document.querySelector('.form-submit').addEventListener('click', function() {
+  this.textContent = '✓ Message envoyé !';
+  this.style.background = '#17A27A';
+  this.style.color = 'white';
+  setTimeout(() => {
+    this.textContent = 'Envoyer le message →';
+    this.style.background = '';
+    this.style.color = '';
+  }, 3000);
+});
+
+// ── Water wave cursor effect ──
+const canvas = document.createElement('canvas');
+canvas.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.06;';
+document.querySelector('.bg-canvas').appendChild(canvas);
+
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const waves = [];
+document.addEventListener('mousemove', (e) => {
+  if (Math.random() > 0.85) {
+    waves.push({ x: e.clientX, y: e.clientY, r: 0, opacity: 1 });
   }
+});
 
-  // ── Hero WebGL Canvas — Neural Network ──
-  const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-
-  if (!gl) {
-    // Fallback: procedural canvas 2D
-    const ctx2 = canvas.getContext('2d');
-    if (!ctx2) return;
-    let W, H;
-    const nodes = [];
-    const NCOUNT = 60;
-
-    function resize2d() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-    }
-    resize2d();
-    window.addEventListener('resize', resize2d);
-
-    for (let i = 0; i < NCOUNT; i++) {
-      nodes.push({
-        x: Math.random() * (W || 800),
-        y: Math.random() * (H || 600),
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: Math.random() * 2 + 1
-      });
-    }
-
-    function draw2d(t) {
-      if (!W) { resize2d(); }
-      ctx2.clearRect(0, 0, W, H);
-
-      // Update
-      nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > W) n.vx *= -1;
-        if (n.y < 0 || n.y > H) n.vy *= -1;
-      });
-
-      // Draw connections
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
-            const alpha = (1 - dist / 140) * 0.35;
-            ctx2.beginPath();
-            ctx2.moveTo(nodes[i].x, nodes[i].y);
-            ctx2.lineTo(nodes[j].x, nodes[j].y);
-            ctx2.strokeStyle = `rgba(61,155,94,${alpha})`;
-            ctx2.lineWidth = 0.5;
-            ctx2.stroke();
-          }
-        }
-      }
-
-      // Draw nodes
-      nodes.forEach(n => {
-        ctx2.beginPath();
-        ctx2.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx2.fillStyle = 'rgba(61,155,94,0.6)';
-        ctx2.fill();
-      });
-
-      requestAnimationFrame(draw2d);
-    }
-
-    draw2d(0);
-    return;
+function drawWaves() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = waves.length - 1; i >= 0; i--) {
+    const w = waves[i];
+    w.r += 2;
+    w.opacity -= 0.02;
+    if (w.opacity <= 0) { waves.splice(i, 1); continue; }
+    ctx.beginPath();
+    ctx.arc(w.x, w.y, w.r, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(23, 162, 122, ${w.opacity})`;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
   }
-
-  // WebGL path
-  let W = 0, H = 0;
-  function resizeGL() {
-    W = canvas.width = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-    gl.viewport(0, 0, W, H);
-  }
-  resizeGL();
-  window.addEventListener('resize', resizeGL);
-
-  // Simple particle system in WebGL
-  const N = 80;
-  const positions = new Float32Array(N * 2);
-  const velocities = new Float32Array(N * 2);
-  for (let i = 0; i < N; i++) {
-    positions[i * 2] = Math.random() * 2 - 1;
-    positions[i * 2 + 1] = Math.random() * 2 - 1;
-    velocities[i * 2] = (Math.random() - 0.5) * 0.003;
-    velocities[i * 2 + 1] = (Math.random() - 0.5) * 0.003;
-  }
-
-  const vsSrc = `
-    attribute vec2 a_pos;
-    void main() {
-      gl_Position = vec4(a_pos, 0.0, 1.0);
-      gl_PointSize = 3.0;
-    }
-  `;
-  const fsSrc = `
-    precision mediump float;
-    uniform vec4 u_col;
-    void main() {
-      float d = distance(gl_PointCoord, vec2(0.5));
-      if (d > 0.5) discard;
-      gl_FragColor = u_col;
-    }
-  `;
-
-  function compileShader(type, src) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    return s;
-  }
-
-  const prog = gl.createProgram();
-  gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSrc));
-  gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSrc));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  const buf = gl.createBuffer();
-  const aPosLoc = gl.getAttribLocation(prog, 'a_pos');
-  const uColLoc = gl.getUniformLocation(prog, 'u_col');
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-  function renderGL() {
-    for (let i = 0; i < N; i++) {
-      positions[i * 2] += velocities[i * 2];
-      positions[i * 2 + 1] += velocities[i * 2 + 1];
-      if (Math.abs(positions[i * 2]) > 1) velocities[i * 2] *= -1;
-      if (Math.abs(positions[i * 2 + 1]) > 1) velocities[i * 2 + 1] *= -1;
-    }
-
-    gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
-    gl.enableVertexAttribArray(aPosLoc);
-    gl.vertexAttribPointer(aPosLoc, 2, gl.FLOAT, false, 0, 0);
-
-    gl.uniform4f(uColLoc, 0.24, 0.61, 0.37, 0.7);
-    gl.drawArrays(gl.POINTS, 0, N);
-
-    requestAnimationFrame(renderGL);
-  }
-
-  renderGL();
-
-})();
+  requestAnimationFrame(drawWaves);
+}
+drawWaves();
 </script>
+
 </body>
 </html>
